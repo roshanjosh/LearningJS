@@ -42,18 +42,49 @@ const data = [
     cat: "Casual",
   },
   {
-    id: 5,
+    id: 6,
     name: "Garmin ",
     img: "./img/f7.jpg",
     price: 74,
-    cat: "Casual",
+    cat: "Luxury",
   },
   {
-    id: 5,
+    id: 8,
     name: "Garmin Venu Random ",
     img: "./img/f8.jpg",
     price: 74,
     cat: "Casual",
   },
 ];
+
+const productContainer = document.querySelector(".products");
+const searchInput = document.querySelector(".search");
+const categoryContainer = document.querySelector(".cats");
+const priceValue = document.querySelector(".priceValue");
+const priceRange = document.querySelector(".priceRange");
+
+const displayProducts = (filteredProducts) => {
+  productContainer.innerHTML = filteredProducts.map(
+    (product) => 
+    `
+    <div class="product">
+      <img src=${product.img} alt="Shirt">
+      <span class="name">${product.name}</span>
+      <span class="price">$${product.price}</span>
+    </div>
+    `
+  ).join("");
+};
+
+displayProducts(data);
+
+searchInput.addEventListener("keyup", (e) =>{
+  const value = e.target.value.toLowerCase();
+
+  if (value) { 
+    displayProducts(data.filter(item => item.name.toLowerCase().indexOf(value) !== -1 ))
+  }else {
+    displayProducts(data);
+  }
+});
 
