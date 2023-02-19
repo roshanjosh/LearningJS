@@ -104,11 +104,29 @@ const setCategories = () => {
   categoriesContainer.addEventListener("click", (e) => {
     const selectedCat = e.target.textContent;
 
-    
+
     selectedCat === "All" ? displayProducts(data)
     : displayProducts(data.filter((item) => item.cat === selectedCat ));
   });
   
 };
 
+const setPrices = () => {
+  const priceList = data.map((item) => item.price);
+  const minPrice = Math.min(...priceList);
+  const maxPrice = Math.max(...priceList);
+
+  priceRange.min = minPrice;
+  priceRange.max = maxPrice;
+  priceRange.value = maxPrice;
+  priceValue.textContent = "$" + maxPrice;
+
+  priceRange.addEventListener("input", (e) => {
+    priceValue.textContent = "$" + e.target.value;
+    displayProducts(data.filter((item) => item.price <= e.target.value ));
+  })
+}
+
+
 setCategories();
+setPrices();
