@@ -59,7 +59,7 @@ const data = [
 
 const productContainer = document.querySelector(".products");
 const searchInput = document.querySelector(".search");
-const categoryContainer = document.querySelector(".cats");
+const categoriesContainer = document.querySelector(".cats");
 const priceValue = document.querySelector(".priceValue");
 const priceRange = document.querySelector(".priceRange");
 
@@ -88,3 +88,27 @@ searchInput.addEventListener("keyup", (e) =>{
   }
 });
 
+const setCategories = () => {
+  const allCats = data.map((item) => item.cat);
+  const categories = [
+    "All", ...allCats.filter((item, i) => {
+      return allCats.indexOf(item) === i;
+    }),
+  ];
+
+  categoriesContainer.innerHTML = categories.map(cat => 
+    `
+    <span class="cat">${cat}</span>
+    `).join("");
+
+  categoriesContainer.addEventListener("click", (e) => {
+    const selectedCat = e.target.textContent;
+
+    
+    selectedCat === "All" ? displayProducts(data)
+    : displayProducts(data.filter((item) => item.cat === selectedCat ));
+  });
+  
+};
+
+setCategories();
